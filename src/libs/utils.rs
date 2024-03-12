@@ -1,12 +1,12 @@
-use shellexpand::tilde;
-use std::env;
+use std::env::set_var;
 
-pub fn ensure_env_var(key: &str, default_value: &str) -> String {
-    match env::var(key) {
-        Ok(value) => tilde(&value).to_string(),
-        Err(_) => {
-            env::set_var(key, default_value);
-            tilde(default_value).to_string()
-        }
+use shellexpand::{env, tilde};
+
+pub fn expand_env_var(key: &str, default_value: &str) -> String {
+    if env(key).is_err() {
+        set_var(key, default_value)
     }
+
+    let expanded_path = env(key).unwrap().to_string();
+    tilde(&expanded_path).to_string()
 }

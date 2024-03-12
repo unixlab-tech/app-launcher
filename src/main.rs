@@ -3,14 +3,14 @@ mod views;
 
 use gtk::{gdk, glib, prelude::*};
 use gtk4 as gtk;
-use libs::files::{ensure_configs, ensure_css_styles};
+use libs::files::{ensure_configs, ensure_styles};
 use views::home_view::build_home_view;
 
 const APPLICATION_ID: &str = "br.com.unixlab.AppLauncher";
 
 fn main() {
-    let _ = ensure_configs();
-    let styles_path = ensure_css_styles();
+    let _configs = ensure_configs();
+    let styles_path = ensure_styles();
 
     build_application(styles_path);
 }
